@@ -5,11 +5,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-engine = create_engine(f"mysql+pymysql://{os.getenv("MYSQL_USER")}:{os.getenv("MYSQL_PASSWORD")}@127.0.0.2:3306/{os.getenv("MYSQL_DATABASE")}")
+engine = create_engine(f"mysql+pymysql://{os.getenv("MYSQL_USER")}:{os.getenv("MYSQL_PASSWORD")}@{os.getenv("MYSQL_DATABASE_IP")}:{os.getenv("MYSQL_DATABASE_PORT")}/{os.getenv("MYSQL_DATABASE")}")
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
 Base.query = db_session.query_property()
 
 def init_db():
-    Base.metadata.create_all(bind=engine)
+        Base.metadata.create_all(bind=engine)
